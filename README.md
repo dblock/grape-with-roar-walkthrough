@@ -110,10 +110,13 @@ require 'roar/json/hal'
 require 'presenters/spline_presenter'
 ```
 
-Present the spline.
+Present the spline in `api.rb`.
 
 ```ruby
-present Spine.new(uuid: params[:uuid]), with: SplinePresenter
+desc 'Return a spline.'
+get ':uuid' do
+  present Spline.new(uuid: params[:uuid]), with: SplinePresenter
+end
 ```
 
 See it at http://localhost:9292/splines/123.
@@ -198,7 +201,7 @@ client = Hyperclient.new('http://localhost:9292')
 
 client.splines.count
 
-client.splines.each do |spline|
+client.splines.to_a.each do |spline|
     puts "Spline #{spline.uuid} is #{spline.reticulated ? 'reticulated' : 'not reticulated'}."
 end
 ```
