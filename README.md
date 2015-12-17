@@ -70,6 +70,8 @@ end
 
 #### Return a Spline in the API
 
+Add to `api.rb`.
+
 ```ruby
   resource :splines do
     desc 'Return a spline.'
@@ -79,12 +81,14 @@ end
   end
 ```
 
-Make a presenter.
+You can navigate to http://localhost:9292/splines/1 and see this `spline.to_s`.
+
+Make a presenter in `presenters/spline_presenter.rb`.
 
 ```ruby
 module SplinePresenter
-  include Roar::Representer::JSON::HAL
-  include Roar::Representer::Feature::Hypermedia
+  include Roar::JSON::HAL
+  include Roar::Hypermedia
   include Grape::Roar::Representer
 
   property :uuid
@@ -96,12 +100,12 @@ module SplinePresenter
 end
 ```
 
-Require JSON+HAL.
+Require JSON+HAL in `config.ru`.
 
 ```ruby
 require 'roar/representer'
-require 'roar/representer/json'
-require 'roar/representer/json/hal'
+require 'roar/json'
+require 'roar/json/hal'
 
 require 'presenters/spline_presenter'
 ```
@@ -120,9 +124,9 @@ Create a `presenters/splines_presenter.rb`.
 
 ``` ruby
 module SplinesPresenter
+  include Roar::JSON::HAL
+  include Roar::Hypermedia
   include Grape::Roar::Representer
-  include Roar::Representer::JSON::HAL
-  include Roar::Representer::Feature::Hypermedia
 
   collection :to_a, extend: SplinePresenter, as: :splines, embedded: true
 end
@@ -149,8 +153,8 @@ Create `presenters/root_presenter.rb`.
 
 ```ruby
 module RootPresenter
-  include Roar::Representer::JSON::HAL
-  include Roar::Representer::Feature::Hypermedia
+  include Roar::JSON::HAL
+  include Roar::Hypermedia
   include Grape::Roar::Representer
 
   link :self do

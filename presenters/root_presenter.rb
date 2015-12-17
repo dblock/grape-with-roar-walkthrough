@@ -1,6 +1,6 @@
 module RootPresenter
-  include Roar::Representer::JSON::HAL
-  include Roar::Representer::Feature::Hypermedia
+  include Roar::JSON::HAL
+  include Roar::Hypermedia
   include Grape::Roar::Representer
 
   link :self do

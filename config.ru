@@ -6,8 +6,8 @@ require 'bundler/setup'
 Bundler.require :default
 
 require 'roar/representer'
-require 'roar/representer/json'
-require 'roar/representer/json/hal'
+require 'roar/json'
+require 'roar/json/hal'
 
 require 'api'
 require 'models/spline'
